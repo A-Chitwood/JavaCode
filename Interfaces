@@ -1,0 +1,116 @@
+MAIN CLASS / DRIVER CODE 
+
+//Imports
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Main {
+    public static void main(String[] args) {
+        //Driver Code
+        //Create a new rating and assign it r1.
+        Rating r1 = new Rating();
+        //Print r1 out to terminal.
+        System.out.println("r1: " + r1);
+        //Add 5 in for a rating on r1.
+        r1.addRating(5);
+        //Print out r1 to terminal after changing rating to 5.
+        System.out.println("r1: " + r1);
+        //Add 3.5 in for a rating on r1.
+        r1.addRating(3.5);
+        //Print out r1 to terminal after changing rating to 3.5.
+        System.out.println("r1: " + r1);
+
+        //Create a new rating and assign it r2.
+        //Give r2 arguments. Call sumOfRatings and assign it 40. Call raters and assign 10.
+        Rating r2 = new Rating(40, 10);
+        //Print out r2 to terminal after changes.
+        System.out.println("r2: " + r2);
+
+        //Create a new rating and assign it r3.
+        //Give r3 arguments. Call sumOfRatings and assign it 12.75. Call raters and assign 3.
+        Rating r3 = new Rating(12.75, 3);
+        //Print out r3 to terminal after changes.
+        System.out.println("r3: " + r3);
+
+        //ArrayList<Rating> assign it name ratings and make it equal to a new ArrayList<>().
+        ArrayList<Rating> ratings = new ArrayList<>();
+        //ratings.add, this will add all the ratings together to be used later in averaging them.
+        ratings.add(r1);
+        ratings.add(r2);
+        ratings.add(r3);
+        //Collections.sort, will sort the collection ratings in order described in loop.
+        Collections.sort(ratings);
+            //For loop. Rating-for each loop :- ratings.
+            for (Rating r: ratings) {
+            //Print out r to terminal.
+            System.out.println(r);
+        }
+    }
+}
+
+SUBCLASS / RATING 
+
+public class Rating implements Comparable<Rating>{
+    //Fields
+    //Declare private fields for subclass.
+    private double sumOfRatings; //Sum of all raters.
+    private int raters; //Number of raters.
+
+    //Constructor for Rating. Calls private fields and makes them usable if called.
+    public Rating() {
+        //Set the value of both fields to zero.
+        double sumOfRatings = 0;
+        int raters = 0;
+    }
+    //Constructor to add arguments: sumOfRatings and raters. Will be used by info in driver code.
+    public Rating(double sumOfRatings, int raters) {
+        //this. to tell program what to call, and they are the same.
+        this.sumOfRatings = sumOfRatings;
+        this.raters = raters;
+    }
+    //Method (void) to make newRating and sumOfRatings equal.
+    public void addRating(double newRating) {
+        this.sumOfRatings += newRating;
+        //raters++ to add to count of raters.
+        raters++;
+    }
+    //Method to getAverageRating. No arguments.
+    public double getAverageRating() {
+        //If statement, if raters is equal to zero, then return zero.
+        if (raters == 0) {
+            return 0;
+        }
+        //if any other number other than zero, return sumOfRatings / raters.
+        else {
+            return sumOfRatings / raters;
+        }
+    }
+    //toString method. Will print to terminal the info from the methods called.
+    public String toString(){
+        /*Return getAverageRating() then "based on" raters then "reviews". Will print data from getAverageRating and raters
+          in the open quotes, and I added based on and reviews. "r#:" will print first from new ratings on main class.*/
+        return this.getAverageRating() + " based on" + " " + this.raters + " " + "reviews";
+    }
+
+    //Method compareTo, will be used to order based off ratings and raters.
+    public int compareTo(Rating r) {
+        //If Statements. Compare this.getAverageRating() to r.getAverageRating() and return to keep -1 or 1 to keep count.
+        if (this.getAverageRating() > r.getAverageRating()) {
+            return -1;
+        }
+        else if (this.getAverageRating() < r.getAverageRating()) {
+            return 1;
+        }
+        //else with nested if statements to do the same as above, but with this.raters and r.raters.
+        else {
+            if (this.raters > r.raters) {
+                return -1;
+            }
+            else if (this.raters < r.raters) {
+                return 1;
+            }
+            return 0;
+        }
+    }
+}
+
