@@ -1,0 +1,194 @@
+//Import util Scanner and Random
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Random random = new Random();
+        //Initiate the scanner
+        Scanner keyboard = new Scanner(System.in);
+        //Set the arrays
+        String[] color = {"red", "green", "yellow", "blue"};
+        String[] digits = {"1", "2", "3", "4", "5", "6", "7", "8", "9"};
+        String[] letters = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+        //User and sequence strings
+        String sequence = "";
+        String user = "";
+        //Int to keep score
+        int score = 0;
+        //String difficulty to store user input
+        String difficulty = "";
+        //Ask the user what difficulty level they want (easy, medium or hard)
+        System.out.println("Choose your difficulty: easy, medium, or hard?");
+        //Boolean to use in while(true) loop for true false statements
+        boolean isCorrect = false;
+        //Make a while (true) loop to ask user the difficulty level. Use if, else if, and else statements to read user input. Ignore case and white spacing
+        //Fault the user if they do not enter a valid input and let them choose a proper level
+        while (true) {
+            if (!isCorrect) {
+                while (true) {
+                    difficulty = keyboard.nextLine();
+                    //If difficulty is easy, add a color onto the sequence
+                    if (", "").equalsIgnoreCase("difficulty.replace(" easy".replace(" ", ""))) {
+                        //Generate a random number that is from 0 to 3 (amount in array)
+                        difficulty = "easy";
+                        //Break to end the statement if it is true.
+                        break;
+                    } else if (difficulty.replace(" ", "").equalsIgnoreCase("medium".replace(" ", ""))) {
+                        // generate a random number out of possible in array
+                        difficulty = "medium";
+                        //Break to end the statement if it is true.
+                        break;
+                    //Set up the hard option
+                    } else if (difficulty.replace(" ", "").equalsIgnoreCase("hard".replace(" ", ""))) {
+                        //Generate a random letter out of alphabet.
+                        difficulty = "hard";
+                        //Break to end the statement if it is true.
+                        break;
+                    //Else statement for invalid input if easy, medium, or hard is not selected
+                    } else {
+                        System.out.println("Invalid Input!");
+                        System.out.println("Choose your difficulty: easy, medium, or hard?");
+                    }
+                }
+            }
+            //If easy is selected generate a random color
+            if (difficulty.equalsIgnoreCase("easy")) {
+                int colorTwo = random.nextInt(color.length);
+                sequence += color[colorTwo] + " ";
+            //If medium is selected generate a random digit
+            } else if (difficulty.equalsIgnoreCase("medium")) {
+                int digitTwo = random.nextInt(digits.length);
+                sequence += digits[digitTwo] + " ";
+            //If hard is selected generate a random letter
+            } else if (difficulty.equalsIgnoreCase("hard")) {
+                int letterTwo = random.nextInt(letters.length);
+                sequence += letters[letterTwo] + " ";
+            }
+            //Print Simon says and put the String sequence in it. Then make a new line
+            System.out.printf("Simon says: %s\n", sequence);
+            //Pause for two seconds
+            Thread.sleep(2000);
+            //Skip 200 lines
+            for (int i=0; i<200; i++){
+            System.out.println(" ");
+            }
+            //Ask the user to try to remember the sequence and type it in
+            System.out.print("What did Simon Say: ");
+            //Read in what they say and store it in the variable user
+            user = keyboard.nextLine();
+            //Compare sequence to user
+            //If they are the same, increment the score
+            if (sequence.replace(" ", "").equalsIgnoreCase(user.replace(" ", ""))) {
+                score = score + 1;
+                System.out.printf("Correct! You have %d correct so far.", score);
+                isCorrect = true;
+            //Else statement for user if they get the wrong answer
+            } else {
+                //Tell user they are wrong and what their score is
+                System.out.printf("Wrong answer. You got %d correct. ", score);
+                //Ask user if they want to play again
+                System.out.print("Do you want to play again? ");
+                //Scan for user response to play again and assign String again to track their answer
+                String again = keyboard.nextLine();
+                //If they want to play again and select yes ask difficulty and reset scores.
+                if(again.replace(" ", "").equalsIgnoreCase("yes".replace(" ", ""))) {
+                    while (true) {
+                        //Ask the user their level of difficulty.
+                        System.out.println("Choose your difficulty: easy, medium, or hard?");
+                        //Scan for users response and reuse difficulty again to reuse above in the loop
+                        difficulty = keyboard.nextLine();
+                        //Tell the program to reset the loops and start over where they began above. Also reset the scores so when they replay the points start at zero
+                        //Easy if statement
+                        if (difficulty.replace(" ", "").equalsIgnoreCase("easy".replace(" ", ""))) {
+                            //Reset sequence and score
+                            sequence = "";
+                            score = 0;
+                            //Break if selected and start at top of loop
+                            break;
+                        //Medium else if statement
+                        } else if (difficulty.replace(" ", "").equalsIgnoreCase("medium".replace(" ", ""))) {
+                            //Reset sequence and score
+                            sequence = "";
+                            score = 0;
+                            //Break if selected and start at top of loop
+                            break;
+                        //Hard else if statement
+                        } else if (difficulty.replace(" ", "").equalsIgnoreCase("hard".replace(" ", ""))) {
+                            //Reset sequence and score
+                            sequence = "";
+                            score = 0;
+                            //Break if selected and start at top of loop
+                            break;
+                        //Else statement if user inputs invalid entry
+                        } else {
+                            System.out.println("That is not a valid input!");
+                        }
+                    }
+                  //Else if for the system to exit and start over if user selects to play again
+                } else if(again.replace(" ", "").equalsIgnoreCase("no".replace(" ", ""))) {
+                    System.out.println("Ok, goodbye!");
+                    System.exit(0);
+                 //Else statement restart loop
+                } else {
+                    //Tell user it was an invalid answer
+                    System.out.println("That is not a valid answer!");
+                    //Aks if they want to play again
+                    System.out.print("Do you want to play again? ");
+                    //Reset difficulty so it is not added together later
+                    difficulty = "";
+                    //If user picks to play again, and now they can choose their difficulty
+                    while (true) {
+                        if (difficulty.equals("easy") || difficulty.equals("medium") || difficulty.equals("hard")) {
+                            //Break and go to beginning of loop
+                            break;
+                        }
+                        //String againTwo for the loop to track if they are playing again
+                        String againTwo = keyboard.nextLine();
+                        //If user said they are playing again, while(true) loop
+                        if (againTwo.replace(" ", "").equalsIgnoreCase("yes".replace(" ", ""))) {
+                            while (true) {
+                                //Pick your difficulty
+                                System.out.println("Choose your difficulty: easy, medium, or hard?");
+                                //Add difficulty to keyboard for this loop
+                                difficulty = keyboard.nextLine();
+                                //Set up for easy choice
+                                if (difficulty.replace(" ", "").equalsIgnoreCase("easy".replace(" ", ""))) {
+                                    difficulty = "easy";
+                                    //Reset score and sequence
+                                    sequence = "";
+                                    score = 0;
+                                    //Break and start loop if this is chosen
+                                    break;
+                                //Set up for medium choice
+                                } else if (difficulty.replace(" ", "").equalsIgnoreCase("medium".replace(" ", ""))) {
+                                    difficulty = "medium";
+                                    //Reset score and sequence
+                                    sequence = "";
+                                    score = 0;
+                                    //Break and start loop if this is chosen
+                                    break;
+                                //Set up for hard choice
+                                } else if (difficulty.replace(" ", "").equalsIgnoreCase("hard".replace(" ", ""))) {
+                                    difficulty = "hard";
+                                    //Reset score and sequence
+                                    sequence = "";
+                                    score = 0;
+                                    //Break and start loop if this is chosen
+                                    break;
+                                 //Final else for invalid input
+                                } else {
+                                    System.out.println("That is not a valid input!");
+                                }
+                            }
+                          //If user selects no, and they do not want to play. End the program.
+                        } else if (againTwo.replace(" ", "").equalsIgnoreCase("no".replace(" ", ""))) {
+                            System.out.println("Ok, goodbye!");
+                            System.exit(0);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
