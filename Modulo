@@ -1,0 +1,15 @@
+import java.util.Scanner;
+
+public class Main {
+  public static void main(String[] args) {
+    // Opening statement read to user.
+    System.out.print("How many people are signed up to play? ");
+    // Add the Scanner
+    Scanner keyboard = new Scanner(System.in);
+    int players = keyboard.nextInt();
+    // Add the formula 
+    int game = (players / 4);  
+    //Tell the user how many games can be played. 
+    System.out.printf("That is enough for %d games.", game);
+  }
+}
