@@ -1,0 +1,127 @@
+package com.company;
+/*Anthony Chitwood
+  CS1180L-07
+  Practice Problem 2
+  January 24, 2022
+ */
+//Creates the game and hold the driver code.
+public class PaperScissorsRock {
+    //Calls the Player class, then assigns player1 and player2 to Player to reuse code.
+    Player player1;
+    Player player2;
+    //Constructor to take player1 and player2, and call from Player class to this class.
+    public PaperScissorsRock(Player player1, Player player2) {
+       this.player1 = player1;
+       this.player2 = player2;
+    }
+    //Method to see who won
+    public static String whoWon(String player1Move, String player2Move) {
+        //if statements to see whose move it is. If they are equal it is a tie.
+        if (player1Move.equals(player2Move)) {
+            return "Tie";
+        } else {
+            //Nested if statement. Shows rock beats scissors and return who won. If Player2 has scissors, Player1 won.
+            if (player1Move.equals("Rock")) {
+                if (player2Move.equals("Scissors")) {
+                    return "Player 1";
+                } else {
+                    return "Player 2";
+                }
+                //Nested if statement. Shows rock beats scissors and return who won. If Player1 has scissors, Player2 won.
+            } else if (player1Move.equals("Scissors")) {
+                if (player2Move.equals("Rock")) {
+                    return "Player 2";
+                } else {
+                    return "Player 1";
+                }
+              //if anything else, (both have rock)
+            } else {
+                if (player2Move.equals("Rock")) {
+                    return "Player 1";
+                } else {
+                    return "Player 2";
+                }
+            }
+        }
+    }
+    //Driver code and keeping score.
+    public static void main(String[] args) {
+        //Changeable driver code to use for StrategicPlayer class. Overrides Player if this is called.
+        Player player1 = new StrategicPlayer(.7, .3, .0);
+        Player player2 = new Player();
+        //Set score to zero.
+        int player1Wins = 0;
+        //for loop to keep count of how many matches and stop at one million.
+        for (int i=0; i<1000000; i++) {
+            //call go method from Player class.
+            String player1Move = player1.go();
+            String player2Move = player2.go();
+            //See who won.
+            String winner = whoWon(player1Move, player2Move);
+            //if if winner is Player 1, add to player 1 wins.
+            if (winner.equals("Player 1")) {
+                player1Wins++;
+            }
+        }
+        //Print out the winner.
+        System.out.println("Player 1 won " + player1Wins + " times");
+    }
+}
+
+___________________________________________________________________________________________________________
+package com.company;
+
+//Player subclass. Will use the same code to create all players.
+public class Player {
+    //go() to be called in main.
+    public String go() {
+        //double for decimals, and Math.random to randomize rock paper and scissors.
+        double random = Math.random();
+        //if random is less than 33% print paper.
+        if (random < .33) {
+            return "Paper";
+            //if random is less than 66% print scissors
+        } else if (random < .66) {
+            return "Scissors";
+            //anything else, print rock.
+        } else {
+            return "Rock";
+        }
+    }
+}
+
+
+________________________________________________________________________________________________________________________
+package com.company;
+//Class to extend Player. Class will use code from Player to function, and will override Player, if called.
+public class StrategicPlayer extends Player {
+    //Create private fields.
+    private double percentPaper;
+    private double percentScissors;
+    private double percentRock;
+    //Constructor
+    public StrategicPlayer(double percentPaper, double percentScissors, double percentRock) {
+        this.percentPaper = percentPaper;
+        this.percentScissors = percentScissors;
+        this.percentRock = percentRock;
+    }
+    //Override to force program to use this class if called and not Player class.
+    @Override
+    //Same basic logic as go() in Player class, but this will override Player and use different driver code.
+    public String go() {
+        double random = Math.random();
+        //if random is less than paper, return paper
+        if (random < percentPaper) {
+            return "Paper";
+            //if random is less than scissors, return scissors
+        } else if (random < percentScissors + percentPaper) {
+            return "Scissors";
+          //Return rock if nothing else.
+        } else {
+            return"Rock";
+        }
+    }
+}
+
+
+
