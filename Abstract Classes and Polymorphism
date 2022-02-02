@@ -1,0 +1,95 @@
+//Main class. Will hold the driver code.
+public class ShoppingTripStartingCode {
+    public static void main(String[] args) {
+        //Creating an array and adding four spots in it.
+        Product[] products = new Product[4];
+            //Driver Code
+            //This designates two necessary and two luxury spots, they call Product class and hold values for Name and Price.
+            Product product1 = new NecessaryProduct("Cheese\t", 1.50);
+            Product product2 = new NecessaryProduct("Bread\t", 2.25);
+            Product product3 = new LuxuryProduct("Soda\t", 3.50);
+            Product product4 = new LuxuryProduct("Candy\t", 2.00);
+            //The products created above will be added to the array.
+            products[0] = product1;
+            products[1] = product2;
+            products[2] = product3;
+            products[3] = product4;
+        //Set total value to zero.
+        double total = 0;
+        //for loop, to add totals and print the result out.
+        for (Product p : products) {
+            //Total added in to running total by calling getTotalPrice().
+            total += p.getTotalPrice();
+            System.out.println(p);
+            }
+        //Will print the name and price, rounded to the second decimal.
+        System.out.printf("\t\t $%.2f Total with tax.", total);
+            }
+        }
+        ______________________________________________________________________________________________________________________________
+        
+      //Product class
+      public abstract class Product {
+        //Private variables name and price.
+        private String name;
+        private double price;
+        //Constructor, will allow other classes to call the private methods.
+        public Product(String name, double price) {
+            //this. to call the private variables.
+            this.name = name;
+            this.price = price;
+        }
+        //@Override will bypass any code and use this code if called.
+        @Override
+        //toString(), returns the string format.
+        public String toString() {
+            return String.format("%s $%.2f", this.name, this.price);
+        }
+        //getPrice(), will return the price.
+        public double getPrice() {
+            return price;
+        }
+        //getTotalPrice(). When called will store price.
+        public abstract double getTotalPrice();
+    }
+       ______________________________________________________________________________________________________________________________
+       
+  //NecessaryProduct class.
+  class NecessaryProduct extends Product {
+     public NecessaryProduct(String name, double price) {
+         super(name, price);
+              }
+     //@Override, will use this code over any other if called.
+     @Override
+     //Called getTotalPrice() to keep track of the tax-free, necessary, items.
+     public double getTotalPrice() {
+         //Set total to zero.
+         double total = 0;
+         //call getPrice() and add the total, then return the new total.
+         total = this.getPrice();
+         return total;
+     }
+ }
+       ______________________________________________________________________________________________________________________________
+       
+  //LuxuryProduct Class.
+  class LuxuryProduct extends Product  {
+    public LuxuryProduct(String name, double price) {
+        //Super method to call name and price from player class. Super will have it skip NecessaryProduct.
+        super(name, price);
+    }
+    //@override to bypass any code and prioritize this code.
+    @Override
+    //Called getTotalPrice() to keep track of the taxable, luxury products.
+    public double getTotalPrice() {
+        //Set total to zero.
+        double total = 0;
+        //call getPrice() and add the total, add the tax. (Multiply total by 1.0575) then return the new total.
+        total = this.getPrice() * (1.0575);
+        return total;
+    }
+}
+       
+       
+       
+ 
